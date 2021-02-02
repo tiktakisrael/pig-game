@@ -17,6 +17,9 @@ const roll = document.querySelector('.btn--roll').addEventListener('click', func
   dice.classList.remove('hidden');
 
 
+
+
+  
 });
 
 

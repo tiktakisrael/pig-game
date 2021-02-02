@@ -1,9 +1,23 @@
 'use strict';
 
-// const player1 = 
+const player1 = document.querySelector('.player--0');
+const player2 = document.querySelector('.player--1');
+const scorePlayer1 = document.querySelector('#score--0');
+const scorePlayer2 = document.querySelector('#score--1');
+const currentScorePlayer1 = document.querySelector('#current--1');
+const currentScorePlayer2 = document.querySelector('#current--1');
+
+const dice = document.querySelector('.dice');
+const addHiddenDice = dice.classList.add('hidden');
 
 
+const roll = document.querySelector('.btn--roll').addEventListener('click', function(){
+  const random = Math.trunc( Math.random() * 6) + 1;
+  document.querySelector('.dice').src = `dice-${random}.png`;
+  dice.classList.remove('hidden');
 
+
+});
 
 
 

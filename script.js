@@ -16,11 +16,17 @@ const swichScore = ()=>{
 const swichCurrent = function(){
   current = document.querySelector(`#current--${player}`);
 };
+// swich background
+const swichBackground = function (){
+// document.querySelector(`.player--${player}`).style.backgroundColor = rgba(255, 255, 255, 0.4);
+// document.querySelector(`.player--${player===0?1:0}`).style.backgroundColor = rgba(255, 255, 255, 0.35);
+document.querySelector('.player--0').classList.toggle('player--active');
+document.querySelector('.player--1').classList.toggle('player--active');
+};
 // swich Player
 const swichPlayer = function(){
-  swichX();swichScore();swichCurrent();
+  swichX();swichScore();swichCurrent();swichBackground();
 };
-
 
 // reset score players
 const resetScore = function(){
@@ -33,19 +39,16 @@ const resetCurrent = function(){
   current.textContent = sumCurrent;
 }; 
 
-
-
-
-
-
-///hidde dice
+//hidde dice
 let dice = document.querySelector('.dice');
 let addHiddenDice = dice.classList.add('hidden');
 resetScore();
 
+let playing = true;
 
 const roll = document.querySelector('.btn--roll').addEventListener('click', function(){
   //roll number 
+  if(playing){
   const random = Math.trunc( Math.random() * 6) + 1;
   document.querySelector('.dice').src = `dice-${random}.png`;
   dice.classList.remove('hidden');
@@ -57,34 +60,88 @@ const roll = document.querySelector('.btn--roll').addEventListener('click', func
     sumCurrent += random;
     current.textContent = sumCurrent;
 };
-});
-
-const hold = document.querySelector('.btn--hold').addEventListener('click',function(){
-  if(Number( current.textContent) !== 0){
-    score.textContent = Number( current.textContent) + Number(score.textContent);
-    resetCurrent();
-    swichPlayer();
-  };
-  if(Number(score.textContent) >= 100 ){
-
   }
 });
 
+const hold = document.querySelector('.btn--hold').addEventListener('click',function(){
+  if(playing){
+  if(Number( current.textContent) !== 0){
+    score.textContent = Number( current.textContent) + Number(score.textContent);
+    resetCurrent();
+  
+  if(Number(score.textContent) >= 10 ){
+    document.querySelector(`.player--${player}`).classList.add('player--winner');
+    addHiddenDice = dice.classList.add('hidden');
+    playing = false;
+  }else{
+    swichPlayer();
+  }
+}}
+});
+
 const newGame = document.querySelector('.btn--new').addEventListener('click', function(){
+  document.querySelector(`.player--${player}`).classList.remove('player--winner');
   addHiddenDice = dice.classList.add('hidden');
   resetCurrent();
   resetScore();
+  player===1?swichPlayer():null;
+  playing = true;
 })
 
+/*
+//selecting elements
 
+const player0EL = document.querySelector('.player--0');
+const player1EL = document.querySelector('.player--1');
+const score0EL = document.querySelector('#score--0');
+const score1EL = document.getElementById('score--1');
+const current0EL = document.getElementById('current--1');
+const current1EL = document.getElementById('current--1');
 
+const diceEL = document.querySelector('.dice');
+const btnNew = document.querySelector('.btn--new');
+const btnroll = document.querySelector('.btn--roll');
+const btnhold = document.querySelector('.btn--hold');
 
+score0EL.textContent = 0;
+score1EL.textContent = 0;
+diceEL.classList.add('hidden');
 
+const scores = [0,0];
+let currentScore = 0;
+let activePlayer = 0;
 
+//rolling dice functionality
+btnroll.addEventListener('click', function(){
+  //1.generating a random dice roll
+const dice = Math.trunc(Math.random()*6)+1;
+//2.display dice
+diceEL.classList.remove('hidden');
+diceEL.src = `dice-${dice}.png`;
+//check for rolled 1: if true,
+if(dice !== 1){
+//add dice to the current score
+currentScore+=dice;
+document.getElementById(`current--${activePlayer}`).textContent = currentScore;
+}else{
+  // swich to next player
+  document.getElementById(`current--${activePlayer}`).textContent = 0;
+  currentScore=0;
+  activePlayer = activePlayer===0?1:0;
+  player0EL.classList.toggle('player--active')
+  player1EL.classList.toggle('player--active')
+}
+});
 
+btnhold.addEventListener('click', function(){
+  //1. add current score to active player's score
+  scores[activePlayer] += currentScore; 
 
+  // 2. check if player's score is >= 100
+  // finish the game
 
-
+  // swich to the next player
+})
 
 
 

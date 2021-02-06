@@ -60,7 +60,12 @@ const roll = document.querySelector('.btn--roll').addEventListener('click', func
     sumCurrent += random;
     current.textContent = sumCurrent;
 };
-  }
+  }else {document.querySelector(`.player--${player}`).classList.remove('player--winner');
+  addHiddenDice = dice.classList.add('hidden');
+  resetCurrent();
+  resetScore();
+  player===1?swichPlayer():null;
+  playing = true;}
 });
 
 const hold = document.querySelector('.btn--hold').addEventListener('click',function(){
@@ -86,7 +91,7 @@ const newGame = document.querySelector('.btn--new').addEventListener('click', fu
   resetScore();
   player===1?swichPlayer():null;
   playing = true;
-})
+}) 
 
 /*
 //selecting elements
